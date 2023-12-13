@@ -310,6 +310,10 @@ void main()
 
 	system("cls");
 
+
+	cout << "Turno del jugador:" << jugador[0] << endl;
+	cout << "" << endl;
+
 	cout << listado << endl;
 	cout << fila << endl << columnas[0] << endl 
 		<< fila << endl << columnas[1] << endl 
@@ -321,10 +325,12 @@ void main()
 		<< fila << endl << columnas[7] << endl
 		<< fila << endl << columnas[8] << endl
 		<< fila << endl << columnas[9] << endl 
-		<< fila;
+		<< fila << endl;
 
-	cout << "Barcos";
-	
-
+	cout << "Barcos" << endl;
+	cout << "4 Barcos de 1 cuadrado:" << endl;
+	cout << "3 Barcos de 2 cuadrados:" << endl;
+	cout << "2 Barcos de 3 cuadrados:" << endl;
+	cout << "1 Barco de 4 cuadrados" << endl;
 	
 }
