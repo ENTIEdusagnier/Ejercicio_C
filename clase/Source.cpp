@@ -23,9 +23,9 @@ void main()
 	string jugador[2];
 
 
-	for (int i = 0; i < NUM_FILAS; i++) 
+	for (int i = 0; i < NUM_FILAS; i++)
 	{
-		for (int j = 0; j < NUM_COLUMNAS; j++) 
+		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
 			campo_jugador_1[i][j] = agua;
 			campo_jugador_2[i][j] = agua;
@@ -36,9 +36,9 @@ void main()
 
 
 	cout << "Campo 1" << endl;
-	for (int i = 0; i < NUM_FILAS; i++) 
+	for (int i = 0; i < NUM_FILAS; i++)
 	{
-		for (int j = 0; j < NUM_COLUMNAS; j++) 
+		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
 			cout << campo_jugador_1[i][j] << " ";
 		}
@@ -48,7 +48,7 @@ void main()
 	cout << "Campo 2" << endl;
 	for (int i = 0; i < NUM_FILAS; i++)
 	{
-		for (int j = 0; j < NUM_COLUMNAS; j++) 
+		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
 			cout << campo_jugador_2[i][j] << " ";
 		}
@@ -59,27 +59,77 @@ void main()
 
 
 
-	for (int i = 0; i < (NUM_BARCOS -1); i++)
+	for (int i = 0; i < NUM_BARCOS; i++)
 	{
 		int tamaño_barco = TAMAÑO_BARCOS[i];
+		cout << tamaño_barco << endl;
 		bool colocado = false;
 
 
-		while (colocado != true) 
+		while (colocado == false)
 		{
 
-			short columna_random = (rand() % 10) + 1;
-			cout << "Columna random: " << columna_random << endl; // Debug o error check line
+			int columna_random = (rand() % 10);
+			cout << "Columna random: " << columna_random + 1 << endl; // Debug o error check line
 
-			short fila_random = (rand() % 10) + 1;
-			cout << "Fila random: " << fila_random << endl; // Debug o error check line
+			int fila_random = (rand() % 10);
+			cout << "Fila random: " << fila_random + 1 << endl; // Debug o error check line
 
-			short random_posicion = (rand() % 4) + 1; //Sumando uno hacemos que el numero entre 0 i 3 sea entre 1-4 que es mas legible para los humanos 1=ARRIBA 2=DERECHA 3=ABAJO 4=IZQUIERDA
+			int random_posicion = (rand() % 4) + 1; //Sumando uno hacemos que el numero entre 0 i 3 sea entre 1-4 que es mas legible para los humanos 1=ARRIBA 2=ABAJO 3=DERECHA 4=IZQUIERDA
 			cout << "Posicion random: " << random_posicion << endl; // Debug o error check line
+
+
+			if (random_posicion == 1 && fila_random - tamaño_barco >= 0) // ARRIBA
+			{
+
+				bool colocar_posible = true;
+				for (int i = 0; i < tamaño_barco; ++i)
+				{
+
+					if (campo_jugador_1[fila_random - i][columna_random] != '~') { // Barco ya colocado
+						colocar_posible = false;
+						break;
+					}
+				}
+				if (colocar_posible)
+				{
+
+					for (int i = 0; i < tamaño_barco; ++i)
+					{
+						campo_jugador_1[fila_random - i][columna_random] = 'X'; // Marcando la posición del barco
+					}
+
+					for (int i = 0; i < NUM_FILAS; i++)
+					{
+						for (int j = 0; j < NUM_COLUMNAS; j++)
+						{
+							cout << campo_jugador_1[i][j] << " ";
+						}
+						cout << endl;
+					}
+					colocado = true;
+				}
+
+			}
+			else if (random_posicion == 2) // ABAJO
+			{
+				colocado = true;
+			}
+			else if (random_posicion == 3) // DERECHA
+			{
+				colocado = true;
+			}
+			else if (random_posicion == 4) // IZQUIERDA
+			{
+
+				colocado = true;
+			}
+
+
 
 		}
 
-		//FIlA == A VERTICAL (+ abajo - menos) COLUMNA == Horizontal (--izquierda ++ derecha), 
+		//FIlA == A VERTICAL (+ abajo - arriba) COLUMNA == Horizontal (--izquierda ++ derecha), 
 
 		/* cout << "Hundir la flota" << endl;
 			cout << "By @Edusagnier" << endl;
@@ -102,6 +152,7 @@ void main()
 		cout << "";
 
 	}
+	
 
 
 }
