@@ -39,7 +39,7 @@ void main()
 	}
 
 
-	cout << "Campo 1" << endl;
+	/*cout << "Campo 1" << endl;
 	for (int i = 0; i < NUM_FILAS; i++)
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
@@ -58,10 +58,9 @@ void main()
 		}
 		cout << endl;
 	}
+	*/
 
 	srand(std::time(NULL));
-
-
 
 
 	for (int jugador = 0; jugador < JUGADORES; jugador++)
@@ -268,6 +267,8 @@ void main()
 	{
 		while (turno_jugador_1)
 		{
+			system("cls");
+
 			cout << "Turno de Jugador 1" << endl;
 
 			cout << "Campo 1" << endl;
@@ -280,48 +281,145 @@ void main()
 				cout << endl;
 			}
 
-			bool columna_correcto = false;
 
-			while (columna_correcto == false)
+			bool disparo_correcto = false;
+			bool seguir = false;
+			while (disparo_correcto == false)
 			{
+				cout << "Introduce la fila la cual quieras disparar (1-10)" << endl;
+				cin >> disparo_fila;
+				disparo_fila = disparo_fila - 1;
+
 				cout << "Introduce la columna la cual quieras disparar (1-10)" << endl;
 				cin >> disparo_columna;
+				disparo_columna = disparo_columna - 1;
 
-				if (disparo_columna >= 1 && disparo_columna <= 10)
+				if (disparo_columna <= 9 && disparo_columna >= 0 && disparo_fila <= 9 && disparo_fila >= 0)
 				{
-					cout << "El numero es valido." << endl;
-					columna_correcto == true;
+					//cout << "Los numeros de la cordenada estan bien inserado" << endl;
+					seguir = true;
+
 				}
-				else {
-					cout << "El numero no es valido." << endl;
+				else
+				{
+					cout << "Los numeros insertados no estan entre 0-10" << endl;
+					disparo_correcto = false;
+					seguir = false;
+				}
+
+				if (seguir)
+				{
+					if (disparo_jugador[0][disparo_fila][disparo_columna] != agua)
+					{
+						cout << "Has introducido una cordenada ya insertada" << endl;
+						disparo_correcto = false;
+					}
+					else
+					{
+						//cout << "Cordenada vacia" << endl;
+						disparo_correcto = true;
+					}
 				}
 			}
 
-			bool fila_correcto = false;
-
-			while (fila_correcto == false)
+			if (campo_jugador[1][disparo_fila][disparo_columna] != agua)
 			{
-				cout << "Introduce la columna la cual quieras disparar (1-10)" << endl;
-
-				if (!(std::cin >> disparo_columna))
-				{
-					cout << "El numero no es valido." << endl;
-					
-				}
-				else {
-					cout << "El numero es valido." << endl;
-					fila_correcto = true;
-				}
+				cout << "Has ACCERTADO barco dado!!" << endl;
+				disparo_jugador[0][disparo_fila][disparo_columna] = 'O';
+				count_dado_1++;
 			}
-
-
+			else
+			{
+				cout << "Has fallado AGUA! " << endl;
+				disparo_jugador[0][disparo_fila][disparo_columna] = 'X';
+			}
 			if (count_dado_1 == 18)
 			{
 				cout << "Has hacertado todas, Has ganado jugador 1" << endl;
-				jugador_1_ganado == true;
+				jugador_1_ganado = true;
 			}
+			Sleep(4000);
 			turno_jugador_1 = false;
 			turno_jugador_2 = true;
+
+		}
+
+		while (turno_jugador_2)
+		{
+			system("cls"); 
+
+			cout << "Turno de Jugador 2" << endl;
+
+			cout << "Campo 2" << endl;
+			for (int i = 0; i < NUM_FILAS; i++)
+			{
+				for (int j = 0; j < NUM_COLUMNAS; j++)
+				{
+					cout << disparo_jugador[1][i][j] << " ";
+				}
+				cout << endl;
+			}
+
+
+			bool disparo_correcto = false;
+			bool seguir = false;
+			while (disparo_correcto == false)
+			{
+				cout << "Introduce la fila la cual quieras disparar (1-10)" << endl;
+				cin >> disparo_fila;
+				disparo_fila = disparo_fila - 1;
+
+				cout << "Introduce la columna la cual quieras disparar (1-10)" << endl;
+				cin >> disparo_columna;
+				disparo_columna = disparo_columna - 1;
+
+				if (disparo_columna <= 9 && disparo_columna >= 0 && disparo_fila <= 9 && disparo_fila >= 0)
+				{
+					//cout << "Los numeros de la cordenada estan bien inserado" << endl;
+					seguir = true;
+
+				}
+				else
+				{
+					cout << "Los numeros insertados no estan entre 0-10" << endl;
+					disparo_correcto = false;
+					seguir = false;
+				}
+
+				if (seguir)
+				{
+					if (disparo_jugador[1][disparo_fila][disparo_columna] != agua)
+					{
+						cout << "Has introducido una cordenada ya insertada" << endl;
+						disparo_correcto = false;
+					}
+					else
+					{
+						//cout << "Cordenada vacia" << endl;
+						disparo_correcto = true;
+					}
+				}
+			}
+
+			if (campo_jugador[0][disparo_fila][disparo_columna] != agua)
+			{
+				cout << "Has ACCERTADO barco dado!!" << endl;
+				disparo_jugador[1][disparo_fila][disparo_columna] = 'O';
+				count_dado_2++;
+			}
+			else
+			{
+				cout << "Has fallado AGUA! " << endl;
+				disparo_jugador[1][disparo_fila][disparo_columna] = 'X';
+			}
+			if (count_dado_2 == 18)
+			{
+				cout << "Has hacertado todas, Has ganado jugador 2" << endl;
+				jugador_2_ganado = true;
+			}
+			Sleep(4000);
+			turno_jugador_1 = true;
+			turno_jugador_2 = false;
 		}
 	}
 
