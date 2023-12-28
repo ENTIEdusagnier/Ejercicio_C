@@ -39,7 +39,7 @@ void main()
 	}
 
 
-	/*cout << "Campo 1" << endl;
+	cout << "Campo 1" << endl;
 	for (int i = 0; i < NUM_FILAS; i++)
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
@@ -58,7 +58,7 @@ void main()
 		}
 		cout << endl;
 	}
-	*/
+
 
 	srand(std::time(NULL));
 
@@ -72,8 +72,7 @@ void main()
 		for (int i = 0; i < NUM_BARCOS; i++)
 		{
 			int tamaño_barco = TAMAÑO_BARCOS[i];
-			cout << "Barco num: " << tamaño_barco << endl;
-			cout << endl;
+			// cout << "Barco num: " << tamaño_barco << endl; //DEBUG
 
 			char char_barco;
 			if (tamaño_barco == 3)
@@ -215,16 +214,11 @@ void main()
 						colocado = true;
 					}
 				}
-
 			}
-
-			cout << endl;
-
 		}
-
 	}
 
-	cout << "Campo 1 Barcos" << endl;
+	cout << "Campo 1 Barcos" << endl; //Barcos solucionados
 	for (int i = 0; i < NUM_FILAS; i++)
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
@@ -254,20 +248,20 @@ void main()
 	cout << "By @Edusagnier" << endl;
 	cout << "" << endl;
 
-	bool jugador_1_ganado = false, jugador_2_ganado = false;
-	bool turno_jugador_1 = true, turno_jugador_2 = false;
+	bool ganador = false; //Esta variable nos permitira cerrar el bucle de juego
+	bool turno_jugador_1 = true, turno_jugador_2 = false; //Nos permite cambiar de turno de cada jugador cuando sea true
 
-	int count_dado_1 = 0, count_dado_2 = 0;
+	int count_dado_1 = 0, count_dado_2 = 0; //Contador de cada jugador de cuantos barcos han dado
 
-	short disparo_columna;
+	short disparo_columna; //Para almacenar los inputs de los jugadores
 	short disparo_fila;
 
 
-	while (jugador_1_ganado == false || jugador_2_ganado == false) // Parara el bucle cuando un jugador de los 2 gane
+	while (ganador == false) // Parara el bucle cuando un jugador de los 2 gane
 	{
 		while (turno_jugador_1)
 		{
-			system("cls");
+			system("cls"); //Limpiamos terminal para borrar lo del otro jugador
 
 			cout << "Turno de Jugador 1" << endl;
 
@@ -296,7 +290,7 @@ void main()
 
 				if (disparo_columna <= 9 && disparo_columna >= 0 && disparo_fila <= 9 && disparo_fila >= 0)
 				{
-					//cout << "Los numeros de la cordenada estan bien inserado" << endl;
+					//cout << "Los numeros de la cordenada estan bien inserado" << endl; //DEBUG
 					seguir = true;
 
 				}
@@ -316,7 +310,7 @@ void main()
 					}
 					else
 					{
-						//cout << "Cordenada vacia" << endl;
+						//cout << "Cordenada vacia" << endl; //DEBUG
 						disparo_correcto = true;
 					}
 				}
@@ -333,20 +327,35 @@ void main()
 				cout << "Has fallado AGUA! " << endl;
 				disparo_jugador[0][disparo_fila][disparo_columna] = 'X';
 			}
-			if (count_dado_1 == 18)
+
+			cout << "Campo 1" << endl;
+			for (int i = 0; i < NUM_FILAS; i++)
 			{
-				cout << "Has hacertado todas, Has ganado jugador 1" << endl;
-				jugador_1_ganado = true;
+				for (int j = 0; j < NUM_COLUMNAS; j++)
+				{
+					cout << disparo_jugador[0][i][j] << " ";
+				}
+				cout << endl;
 			}
-			Sleep(4000);
+			
+
 			turno_jugador_1 = false;
 			turno_jugador_2 = true;
 
+			if (count_dado_1 == 18) //En caso que de a los 18 barcos GANARA
+			{
+				cout << "Has hacertado todas, Has ganado jugador 1" << endl;
+				ganador = true;
+				turno_jugador_1 = false;
+				turno_jugador_2 = false;
+
+			}
+			Sleep(1000); //Para dar unos segundos antes de que se limpie la terminal para pasar turno
 		}
 
 		while (turno_jugador_2)
 		{
-			system("cls"); 
+			system("cls");
 
 			cout << "Turno de Jugador 2" << endl;
 
@@ -375,7 +384,7 @@ void main()
 
 				if (disparo_columna <= 9 && disparo_columna >= 0 && disparo_fila <= 9 && disparo_fila >= 0)
 				{
-					//cout << "Los numeros de la cordenada estan bien inserado" << endl;
+					//cout << "Los numeros de la cordenada estan bien inserado" << endl; //DEBUG
 					seguir = true;
 
 				}
@@ -395,7 +404,7 @@ void main()
 					}
 					else
 					{
-						//cout << "Cordenada vacia" << endl;
+						//cout << "Cordenada vacia" << endl; //DEBUG
 						disparo_correcto = true;
 					}
 				}
@@ -412,14 +421,50 @@ void main()
 				cout << "Has fallado AGUA! " << endl;
 				disparo_jugador[1][disparo_fila][disparo_columna] = 'X';
 			}
-			if (count_dado_2 == 18)
+
+
+			cout << "Campo 2" << endl;
+			for (int i = 0; i < NUM_FILAS; i++)
 			{
-				cout << "Has hacertado todas, Has ganado jugador 2" << endl;
-				jugador_2_ganado = true;
+				for (int j = 0; j < NUM_COLUMNAS; j++)
+				{
+					cout << disparo_jugador[1][i][j] << " ";
+				}
+				cout << endl;
 			}
-			Sleep(4000);
+
+			
 			turno_jugador_1 = true;
 			turno_jugador_2 = false;
+
+			if (count_dado_2 == 18) //En caso que de a los 18 barcos GANARA
+			{
+				cout << "Has hacertado todas, Has ganado jugador 2" << endl;
+				ganador = true;
+				turno_jugador_1 = false;
+				turno_jugador_2 = false;
+
+				cout << "Campo Finalizado Jugador 1" << endl;
+				for (int i = 0; i < NUM_FILAS; i++)
+				{
+					for (int j = 0; j < NUM_COLUMNAS; j++)
+					{
+						cout << campo_jugador[0][i][j] << " ";
+					}
+					cout << endl;
+				}
+
+				cout << "Campo Finalizado de GANADOR" << endl;
+				for (int i = 0; i < NUM_FILAS; i++)
+				{
+					for (int j = 0; j < NUM_COLUMNAS; j++)
+					{
+						cout << campo_jugador[1][i][j] << " ";
+					}
+					cout << endl;
+				}
+				Sleep(1000);//Para dar unos segundos antes de que se limpie la terminal para pasar turno
+			}
 		}
 	}
 
