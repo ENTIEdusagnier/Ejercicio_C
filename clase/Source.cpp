@@ -6,6 +6,8 @@
 #include <cstdlib>
 
 #include <windows.h> // DE CHAT GPT para poder hacer wait el cual me permite ver las tablas hechas para debug
+#include <limits.h>  // Para limpiar el buffer de entrada
+
 
 using namespace std; //Permite no utilizar std::
 
@@ -22,7 +24,7 @@ void main()
 	char agua = '~';
 
 	int TAMAÑO_BARCOS[NUM_BARCOS] = { 3, 4, 5, 6 };
-	short disparo_columna;
+
 
 
 	for (int i = 0; i < NUM_FILAS; i++)
@@ -100,12 +102,12 @@ void main()
 
 				short columna_random = (rand() % 10);
 
-				/*cout << "Columna random: " << columna_random + 1 << endl; // Debug o error check line
+				/*cout << "Columna random: " << columna_random + 1 << endl; // DEBUG o error check line
 				cout << endl;*/
 
 				short fila_random = (rand() % 10);
 
-				/*cout << "Fila random: " << fila_random + 1 << endl; // Debug o error check line
+				/*cout << "Fila random: " << fila_random + 1 << endl; // DEBUG o error check line
 				cout << endl; */
 
 				short random_posicion = (rand() % 4) + 1; //Sumando uno hacemos que el numero entre 0 i 3 sea entre 1-4 que es mas legible para los humanos 1=ARRIBA 2=ABAJO 3=DERECHA 4=IZQUIERDA
@@ -223,7 +225,7 @@ void main()
 
 	}
 
-	cout << "Campo 1" << endl;
+	cout << "Campo 1 Barcos" << endl;
 	for (int i = 0; i < NUM_FILAS; i++)
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
@@ -233,7 +235,7 @@ void main()
 		cout << endl;
 	}
 
-	cout << "Campo 2" << endl;
+	cout << "Campo 2 Barcos" << endl;
 	for (int i = 0; i < NUM_FILAS; i++)
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
@@ -243,25 +245,83 @@ void main()
 		cout << endl;
 	}
 
+	Sleep(5000); //CHAT GPT Para parar 5 seg para mirar tablas. DEBUG
+
+	system("cls"); //Limpia la terminal
+
+	//Empieza el juego
+
 	cout << "Hundir la flota" << endl;
 	cout << "By @Edusagnier" << endl;
 	cout << "" << endl;
 
-	Sleep(5000);
-
-	system("cls"); 
-
-
 	bool jugador_1_ganado = false, jugador_2_ganado = false;
 	bool turno_jugador_1 = true, turno_jugador_2 = false;
 
-	while (jugador_1_ganado == false || jugador_2_ganado == false)
+	int count_dado_1 = 0, count_dado_2 = 0;
+
+	short disparo_columna;
+	short disparo_fila;
+
+
+	while (jugador_1_ganado == false || jugador_2_ganado == false) // Parara el bucle cuando un jugador de los 2 gane
 	{
-		while (turno_jugador_1) 
+		while (turno_jugador_1)
 		{
 			cout << "Turno de Jugador 1" << endl;
-		
-		
+
+			cout << "Campo 1" << endl;
+			for (int i = 0; i < NUM_FILAS; i++)
+			{
+				for (int j = 0; j < NUM_COLUMNAS; j++)
+				{
+					cout << disparo_jugador[0][i][j] << " ";
+				}
+				cout << endl;
+			}
+
+			bool columna_correcto = false;
+
+			while (columna_correcto == false)
+			{
+				cout << "Introduce la columna la cual quieras disparar (1-10)" << endl;
+				cin >> disparo_columna;
+
+				if (disparo_columna >= 1 && disparo_columna <= 10)
+				{
+					cout << "El numero es valido." << endl;
+					columna_correcto == true;
+				}
+				else {
+					cout << "El numero no es valido." << endl;
+				}
+			}
+
+			bool fila_correcto = false;
+
+			while (fila_correcto == false)
+			{
+				cout << "Introduce la columna la cual quieras disparar (1-10)" << endl;
+
+				if (!(std::cin >> disparo_columna))
+				{
+					cout << "El numero no es valido." << endl;
+					
+				}
+				else {
+					cout << "El numero es valido." << endl;
+					fila_correcto = true;
+				}
+			}
+
+
+			if (count_dado_1 == 18)
+			{
+				cout << "Has hacertado todas, Has ganado jugador 1" << endl;
+				jugador_1_ganado == true;
+			}
+			turno_jugador_1 = false;
+			turno_jugador_2 = true;
 		}
 	}
 
