@@ -6,7 +6,7 @@
 #include <cstdlib>
 
 #include <windows.h> // DE CHAT GPT para poder hacer wait el cual me permite ver las tablas hechas para debug
-#include <limits.h>  // Para limpiar el buffer de entrada
+
 
 
 using namespace std; //Permite no utilizar std::
@@ -20,7 +20,7 @@ void main()
 {
 
 
-	char campo_jugador[JUGADORES][NUM_FILAS][NUM_COLUMNAS], disparo_jugador[JUGADORES][NUM_FILAS][NUM_COLUMNAS];
+	char campo_jugador[JUGADORES][NUM_FILAS][NUM_COLUMNAS], disparo_jugador[JUGADORES][NUM_FILAS][NUM_COLUMNAS]; //Asignamos una matriz por jugador, filas, columna
 	char agua = '~';
 
 	int TAMAÑO_BARCOS[NUM_BARCOS] = { 3, 4, 5, 6 };
@@ -350,7 +350,7 @@ void main()
 				turno_jugador_2 = false;
 
 			}
-			Sleep(1000); //Para dar unos segundos antes de que se limpie la terminal para pasar turno
+			Sleep(3000); //Para dar unos segundos antes de que se limpie la terminal para pasar turno
 		}
 
 		while (turno_jugador_2)
@@ -415,6 +415,7 @@ void main()
 				cout << "Has ACCERTADO barco dado!!" << endl;
 				disparo_jugador[1][disparo_fila][disparo_columna] = 'O';
 				count_dado_2++;
+
 			}
 			else
 			{
@@ -463,8 +464,8 @@ void main()
 					}
 					cout << endl;
 				}
-				Sleep(1000);//Para dar unos segundos antes de que se limpie la terminal para pasar turno
 			}
+			Sleep(3000);//Para dar unos segundos antes de que se limpie la terminal para pasar turno
 		}
 	}
 
