@@ -13,8 +13,12 @@ using namespace std; //Permite no utilizar std::
 
 #define NUM_FILAS 10
 #define NUM_COLUMNAS 10
+
 #define NUM_BARCOS 4
 #define JUGADORES 2
+
+#define JUGADOR_1 0
+#define JUGADOR_2 1
 
 void main()
 {
@@ -31,10 +35,10 @@ void main()
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
-			campo_jugador[0][i][j] = agua;
-			campo_jugador[1][i][j] = agua;
-			disparo_jugador[0][i][j] = agua;
-			disparo_jugador[1][i][j] = agua;
+			campo_jugador[JUGADOR_1][i][j] = agua;
+			campo_jugador[JUGADOR_2][i][j] = agua;
+			disparo_jugador[JUGADOR_1][i][j] = agua;
+			disparo_jugador[JUGADOR_2][i][j] = agua;
 		}
 	}
 
@@ -44,7 +48,7 @@ void main()
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
-			cout << campo_jugador[0][i][j] << " ";
+			cout << campo_jugador[JUGADOR_1][i][j] << " ";
 		}
 		cout << endl;
 	}
@@ -54,7 +58,7 @@ void main()
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
-			cout << campo_jugador[1][i][j] << " ";
+			cout << campo_jugador[JUGADOR_2][i][j] << " ";
 		}
 		cout << endl;
 	}
@@ -98,12 +102,12 @@ void main()
 			while (colocado == false)
 			{
 
-				short columna_random = (rand() % 10);
+				short columna_random = (rand() % NUM_FILAS);
 
 				/*cout << "Columna random: " << columna_random + 1 << endl; // DEBUG o error check line
 				cout << endl;*/
 
-				short fila_random = (rand() % 10);
+				short fila_random = (rand() % NUM_COLUMNAS);
 
 				/*cout << "Fila random: " << fila_random + 1 << endl; // DEBUG o error check line
 				cout << endl; */
@@ -223,7 +227,7 @@ void main()
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
-			cout << campo_jugador[0][i][j] << " ";
+			cout << campo_jugador[JUGADOR_1][i][j] << " ";
 		}
 		cout << endl;
 	}
@@ -233,7 +237,7 @@ void main()
 	{
 		for (int j = 0; j < NUM_COLUMNAS; j++)
 		{
-			cout << campo_jugador[1][i][j] << " ";
+			cout << campo_jugador[JUGADOR_2][i][j] << " ";
 		}
 		cout << endl;
 	}
@@ -270,7 +274,7 @@ void main()
 			{
 				for (int j = 0; j < NUM_COLUMNAS; j++)
 				{
-					cout << disparo_jugador[0][i][j] << " ";
+					cout << disparo_jugador[JUGADOR_1][i][j] << " ";
 				}
 				cout << endl;
 			}
@@ -278,6 +282,8 @@ void main()
 
 			bool disparo_correcto = false;
 			bool seguir = false;
+
+
 			while (disparo_correcto == false)
 			{
 				cout << "Introduce la fila la cual quieras disparar (1-10)" << endl;
@@ -300,10 +306,11 @@ void main()
 					disparo_correcto = false;
 					seguir = false;
 				}
+	
 
 				if (seguir)
 				{
-					if (disparo_jugador[0][disparo_fila][disparo_columna] != agua)
+					if (disparo_jugador[JUGADOR_1][disparo_fila][disparo_columna] != agua)
 					{
 						cout << "Has introducido una cordenada ya insertada" << endl;
 						disparo_correcto = false;
@@ -316,16 +323,16 @@ void main()
 				}
 			}
 
-			if (campo_jugador[1][disparo_fila][disparo_columna] != agua)
+			if (campo_jugador[JUGADOR_2][disparo_fila][disparo_columna] != agua)
 			{
 				cout << "Has ACCERTADO barco dado!!" << endl;
-				disparo_jugador[0][disparo_fila][disparo_columna] = 'O';
+				disparo_jugador[JUGADOR_1][disparo_fila][disparo_columna] = 'O';
 				count_dado_1++;
 			}
 			else
 			{
 				cout << "Has fallado AGUA! " << endl;
-				disparo_jugador[0][disparo_fila][disparo_columna] = 'X';
+				disparo_jugador[JUGADOR_1][disparo_fila][disparo_columna] = 'X';
 			}
 
 			cout << "Campo 1" << endl;
@@ -333,7 +340,7 @@ void main()
 			{
 				for (int j = 0; j < NUM_COLUMNAS; j++)
 				{
-					cout << disparo_jugador[0][i][j] << " ";
+					cout << disparo_jugador[JUGADOR_1][i][j] << " ";
 				}
 				cout << endl;
 			}
@@ -349,6 +356,25 @@ void main()
 				turno_jugador_1 = false;
 				turno_jugador_2 = false;
 
+				cout << "Campo Finalizado Jugador 1" << endl;
+				for (int i = 0; i < NUM_FILAS; i++)
+				{
+					for (int j = 0; j < NUM_COLUMNAS; j++)
+					{
+						cout << campo_jugador[JUGADOR_1][i][j] << " ";
+					}
+					cout << endl;
+				}
+
+				cout << "Campo Finalizado de GANADOR" << endl;
+				for (int i = 0; i < NUM_FILAS; i++)
+				{
+					for (int j = 0; j < NUM_COLUMNAS; j++)
+					{
+						cout << campo_jugador[JUGADOR_2][i][j] << " ";
+					}
+					cout << endl;
+				}
 			}
 			Sleep(3000); //Para dar unos segundos antes de que se limpie la terminal para pasar turno
 		}
@@ -364,7 +390,7 @@ void main()
 			{
 				for (int j = 0; j < NUM_COLUMNAS; j++)
 				{
-					cout << disparo_jugador[1][i][j] << " ";
+					cout << disparo_jugador[JUGADOR_2][i][j] << " ";
 				}
 				cout << endl;
 			}
@@ -397,7 +423,7 @@ void main()
 
 				if (seguir)
 				{
-					if (disparo_jugador[1][disparo_fila][disparo_columna] != agua)
+					if (disparo_jugador[JUGADOR_2][disparo_fila][disparo_columna] != agua)
 					{
 						cout << "Has introducido una cordenada ya insertada" << endl;
 						disparo_correcto = false;
@@ -410,17 +436,17 @@ void main()
 				}
 			}
 
-			if (campo_jugador[0][disparo_fila][disparo_columna] != agua)
+			if (campo_jugador[JUGADOR_1][disparo_fila][disparo_columna] != agua)
 			{
 				cout << "Has ACCERTADO barco dado!!" << endl;
-				disparo_jugador[1][disparo_fila][disparo_columna] = 'O';
+				disparo_jugador[JUGADOR_2][disparo_fila][disparo_columna] = 'O';
 				count_dado_2++;
 
 			}
 			else
 			{
 				cout << "Has fallado AGUA! " << endl;
-				disparo_jugador[1][disparo_fila][disparo_columna] = 'X';
+				disparo_jugador[JUGADOR_2][disparo_fila][disparo_columna] = 'X';
 			}
 
 
@@ -429,7 +455,7 @@ void main()
 			{
 				for (int j = 0; j < NUM_COLUMNAS; j++)
 				{
-					cout << disparo_jugador[1][i][j] << " ";
+					cout << disparo_jugador[JUGADOR_2][i][j] << " ";
 				}
 				cout << endl;
 			}
@@ -450,7 +476,7 @@ void main()
 				{
 					for (int j = 0; j < NUM_COLUMNAS; j++)
 					{
-						cout << campo_jugador[0][i][j] << " ";
+						cout << campo_jugador[JUGADOR_1][i][j] << " ";
 					}
 					cout << endl;
 				}
@@ -460,7 +486,7 @@ void main()
 				{
 					for (int j = 0; j < NUM_COLUMNAS; j++)
 					{
-						cout << campo_jugador[1][i][j] << " ";
+						cout << campo_jugador[JUGADOR_2][i][j] << " ";
 					}
 					cout << endl;
 				}
@@ -468,6 +494,6 @@ void main()
 			Sleep(3000);//Para dar unos segundos antes de que se limpie la terminal para pasar turno
 		}
 	}
-
-
 }
+
+
