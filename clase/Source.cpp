@@ -120,7 +120,7 @@ void main()
 
 				//FIlA == A VERTICAL (+ abajo - arriba) COLUMNA == Horizontal (--izquierda ++ derecha)
 
-				if (random_posicion == 1 && fila_random - tamaño_barco >= 0) // ARRIBA
+				if (random_posicion == 1 && fila_random - tamaño_barco >= 0) // ARRIBA Y verifica que no se salga del mapa haciendo una resta del tamaño y el numero total de la fila.
 				{
 
 					bool colocar_posible_1 = true;
